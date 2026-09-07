@@ -1,0 +1,56 @@
+Szoftvertesztelés 1. gyak - 09.07.
+
+1. feladat - DiscountCalculator 
+teszt esetek/hibák:
+9000ft értékű vásárlás esetén
+10000ft értékű vásárlás esetén- hiba, nincs kezelve az egyenlőség
+határok ellenőrzése- ezek között teszt esetek
+50000ft értékű rendelésnél is hiba van (<=), megengedi ott az egyenlőséget, ahol nem kéne és fordítva
+negatív számok sincsenek rendesen lekezelve, a fizetés összege nem lehet negatív értékű
+a vip kedvezmény is hibásan lett megadva (5 helyett 0.05)
+
+2. feladat - ParkingFeeCalculator
+teszt esetek/hibák:
+első feltételnél meg kéne engedni az egyenlőséget
+nincs feltétel arra, hogy 15 perc után számolja az órákat
+a vip kedvezmény nem százalékos értékben van implementálva 
+a negatív értékhez nincs feltétel (idő, parkolási díj)
+az 5000 ft-os maximumot ajánlott a többi számítás elé írni
+
+3. feladat - CinemaTicketCalculator
+teszt esetek/hibák:
+a 6 éves kor feltétele hibásan van megadva 
+a 65 éves kor feltétele is szintén hibás, hiszen nem engedi meg az egyenlőséget
+nincs korlátozva a kedvezmények mennyisége, ne engedje meg a diák és a kor kedvezményt egyszerre
+3D-nél nem 800ft felárt számít fel, hanem 80%-os áremelést
+nincs kezelve a negatív illetve a 120 feletti életkor esete
+
+4. feladat - ExamGradeCalculator
+teszt esetek/hibák:
+a vizsga sikerességének feltételénél azt is megengedi, ha csak az egyik sikertelen, de a másik sikeres
+a 2-es jegy értékhatára hibásan lett megadva, 60 pont már 3-as
+a 3-as jegy értékhatára szintén hibás, megengedi a 70-nél az egyenlőséget
+a 4-es jegy értékhatára is hibásan van megadva
+az 5-ös jegynél nem ellenőrizni, hogy maximum 100 pont lehet
+a negatív pontszámokat nem vizsgálja, így hibát se dob 
+
+5. feladat - PackageClassifier
+teszt esetek/hibák:
+a small csomag feltételénél nem engedi meg a maximum értékeket
+a medium csomagnál nem || kell, hanem &&
+nem vizsgálja a 0 vagy negatív értékű méretet és tömeget
+
+
+Gyakorló feladat- szállítási díj
+teszt esetek/hibák:
+- ISO kód tesztelése kisbetűs esetre is, egyáltalán nincsenek az ISO kódok ellenőrizve sehol
+- üres országkód esete
+- hibás országkód esete (mondjuk több mint 2 betű)
+- külföldi és expressz szállítás együttes esetének tesztelése
+- 5kg esete (csak kisebb és nagyobb esetére van feltétel)
+- az expressz esetnél nem 50-et kéne hozzáadni, hanem az 50 százalékot
+- 20 kg esete sincs rendesen megadva
+- negatív tömeget és rendelési értéket ellenőrizni, illetve utasítsa el
+- 20 ezer határérték nem megfelelő
+- az elején korai return érték
+- magyar ingyenes szállítás és expressz szállítás együttese?
