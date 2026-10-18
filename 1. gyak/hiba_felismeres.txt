@@ -1,0 +1,131 @@
+1. DiscountCalculator
+
+Hibák:
+Alsó határ hiba (10 000Ft)
+"orderValue > 10000" -> "orderValue >= 10000"
+Középső és felső határ átfedési hiba (50 000Ft)
+"orderValue <= 50000" és "orderValue > 50000" -> egyenlőség megengedésének felcserélése
+VIP kedvezmény hozzáadásának hibája
+"discount += 5;" -> "discount += 0.05;"
+Végösszeg kiszámításának képlete hibás
+"return orderValue - discount;" -> "return orderValue * (1 - discount);"
+Negatív érték vizsgálatának hiánya
+
+
+Tesztesetek:
+Negatív rendelési összeg ellenőrzése
+Nulla forintos rendelés ellenőrzése
+Kedvezmény nélküli felső határ ellenőrzése (9999Ft)
+5%-os kedvezmény alsó-felső határ ellenőrzése (10000Ft, 24999Ft)
+10%-os kedvezmény alsó-felső határ ellenőrzése (25000Ft, 49999Ft)
+15%-os kedvezmény alsó határ ellenőrzése (50000Ft)
+VIP kedvezmény egyéb kedvezmény nélküli ellenőrzése
+VIP kedvezmény 5%-os kedvezménnyel ellenőrzése
+VIP kedvezmény 10%-os kedvezménnyel ellenőrzése
+VIP kedvezmény 15%-os kedvezménnyel ellenőrzése
+VIP kedvezmény felső határának tesztelése (20% feletti kedvezmény)
+
+
+2. ParkingFeeCalculator
+
+Hibák:
+Ingyenes időszak határ hiba (15 perc)
+"minutes < 15" -> "minutes <= 15"
+Megkezdett óra kerekítési hibája
+"Math.floor(minutes / 60)" -> "Math.ceil(minutes / 60)"
+VIP kedvezmény kivonásának hibája
+"fee = fee - 20;" -> "fee = fee * 0.8;"
+Napi maximális díjkorlát vizsgálata a kedvezmények levonása után
+Negatív érték vizsgálatának hiánya
+
+
+Tesztesetek:
+Negatív parkolási idő ellenőrzése
+Nulla perces parkolás ellenőrzése
+Ingyenes időszak felső határ ellenőrzése (15 perc)
+Első megkezdett óra alsó határ ellenőrzése (16 perc)
+Egy teljes óra parkolás ellenőrzése (60 perc)
+Napi maximum alatti díjszámítás ellenőrzése
+Napi maximális díjkorlát elérése hétköznap
+Hétvégi 50%-os kedvezmény ellenőrzése
+Hétvégi kedvezmény a napi maximum felett
+VIP 20%-os kedvezmény hézköznap ellenőrzése
+VIP kedvezmény hétvégén ellenőrzése
+Kombinált kedvezmény napi maximum felett
+
+
+3. CinemaTicketCalculator
+
+Hibák:
+Ingyenes korhatár hiba (6 éves)
+"age <= 6" -> "age < 6"
+Nyugdíjas korhatár hiba (65 éves)
+"age > 65" -> "age => 65"
+Halmozodó kedvezények hibája
+3D felár számításának képlete hibás
+"price = price * 1.8;" -> "price += 800;"
+Negatív és 120 feletti életkor vizsgálatánakl hiánya
+
+
+Tesztesetek:
+Negatív életkor ellenőrzése
+Nulla éves életkor ellenőrzése
+Érvényes életkor felső határ ellenőrzése (120 éves)
+Érvényes életkor felső határa feletti ellenőrzés (121 éves)
+Ingyenes korhatár felső határ ellenőrzése (5 éves)
+30%-os kedvezmény alsó-felső határ ellenőrzése (6 éves, 17 éves)
+Kedvezmény nélküli felnőtt korhatár alsó-felső határ ellenőrzése (18 éves, 64 éves)
+40%-os kedvezmény alsó határ ellenőrzése (65 éves)
+Diákkedvezmény egyéb kedvezmény nélküli ellenőrzése
+Diákkedvezmény 30%-os kedvezménnyel ellenőrzése
+3D felár alkalmazása normál felnőtt jegyre ellenőrzése
+3D felár alkalmazása kedvezményes jegyre ellenőrzése
+3D felár alkalmazása ingyenes jegyre ellenőrzése
+
+
+4. ExamGradeCalculator
+
+Hibák:
+Pontszámok alsó-felső határának és negatív értékek vizsgálatának hiánya
+Érdemjegyek felső határának megadása hibás
+"(total <= 60)" -> "(total < 60)"; "(total <= 70)" -> "(total < 70)"; "(total <= 85)" -> "(total < 85)"
+A minimumfeltételek ellenőrzésének logikai hibája
+"(theory < 30 && practice < 20)" -> "(theory < 30 || practice < 20)"
+
+
+Tesztesetek:
+Negatív elméleti/gyakorlati pontszám ellenőrzése (-1 pont)
+Maximális elméleti/gyakorlati pontszám feletti ellenőrzése (61 pont, 41 pont)
+Sikertelen elméleti és gyakorlati pontszám ellenőrzése
+Sikertelen elméleti pontszám ellenőrzése
+Sikertelen gyakorlati pontszám ellenőrzése
+2-es érdemjegy alsó-felső határ ellenőrzése (50 pont, 59 pont)
+3-as érdemjegy alsó-felső határ ellenőrzése (60 pont, 69 pont)
+4-es érdemjegy alsó-felső határ ellenőrzése (70 pont, 84 pont)
+5-ös érdemjegy alsó határ ellenőrzése (85 pont)
+Maximálisan elérhető összpontszám ellenőrzése (100 pont)
+
+
+5. PackageClassifier
+
+Hibák:
+SMALL kategóriánál határtérték hiba
+"< 2" -> "<= 2"; "< 30" -> "<= 30"
+MEDIUM kategóriánál logikai hiba
+"||" -> "&&"
+Érvénytelen (INVALID) állapot vizsgálatának hiánya
+
+
+Tesztesetek:
+Negatív vagy nulla tömeg ellenőrzése
+Negatív vagy nulla méret ellenőrzése
+Legkisebb érvényes méret és tömeg ellenőrzése
+Small kategória felső határának ellenőrzése
+Small kategória túllépése csak tömeggel való ellenőrzése
+Small kategória túllépése egyetlen mérettel való ellenőrzése
+Medium kategória felső határának ellenőrzése
+Medium kategória túllépése csak tömeggel való ellenőrzése
+Medium kategória túllépése egyetlen mérettel való ellenőrzése
+Large kategória felső határának ellenőrzése
+Large kategória túllépése csak tömeggel való ellenőrzése
+Large kategória túllépése egyetlen mérettel való ellenőrzése

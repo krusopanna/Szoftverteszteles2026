@@ -1,0 +1,29 @@
+Szállítási díjas órai feladat
+
+Hibák:
+Ingyenes szállítás határérték hiba
+"orderValue >= 20000" -> "orderValue > 20000"
+Tömeg határérték hibák
+"(weight > 5 && weight < 20)" -> (weight => 5 && weight <= 20)"
+Expressz szállítás képlete hibás
+"shippingCost = shippingCost + 50;" -> "shippingCost = shippingCost * 1.5;"
+Negatív érték vizsgálatának hiánya rendelési értékre és tömegre
+Országkód kis- és nagybetűs kezelésének hiánya
+"country === "HU"" -> "country.toUpperCase() === "HU""
+
+
+Tesztesetek:
+T1: Negatív rendelési érték ellenőrzése
+T2: Negatív csomagtömeg ellenőrzése
+T3:	Belföldi ingyenes szállítás felső határának ellenőrzése (20000Ft)
+T4: Belföldi ingyenes szállítás elérésének ellenőrzése 
+T5: Belföldi 5 kg alatti normál szállítás ellenőrzése
+T6: Belföldi 5 kg-os határérték ellenőrzése 
+T7: Belföldi 20 kg-os határérték ellenőrzése
+T8: Belföldi 20 kg feletti szállítás ellenőrzése
+T9: Kisbetűs magyar országkód ellenőrzése
+T10: Külföldi szállítás ellenőrzése
+T11: Külföldi szállítás 20000 Ft feletti rendelésnél ellenőrzése 
+T12: Expressz szállítás belföldre ellenőrzése
+T13: Expressz és külföldi szállítás kombinációjának ellenőrzése
+T14: Ingyenes belföldi szállítás expressz opcióval ellenőrzése

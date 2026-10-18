@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Shipping Cost QUnit Tesztek</title>
+  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.20.0.css">
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+
+  <script src="https://code.jquery.com/qunit/qunit-2.20.0.js"></script>
+
+  <script src="calculateShippingCost.js"></script>
+
+  <script>
+    QUnit.module('calculateShippingCost tesztek', function() {
+
+      QUnit.test('T1: Negatív rendelési érték ellenőrzése', function(assert) {
+        assert.throws(function() {
+          calculateShippingCost(-100, 2, "HU", false);
+        }, /hiba|érvénytelen|negatív/, 'Negatív összegnél hibát kell dobnia');
+      });
+
+      QUnit.test('T2: Negatív csomagtömeg ellenőrzése', function(assert) {
+        assert.throws(function() {
+          calculateShippingCost(5000, -1, "HU", false);
+        }, /hiba|érvénytelen|negatív/, 'Negatív tömegnél hibát kell dobnia');
+      });
+
+      QUnit.test('T3: Belföldi ingyenes szállítás felső határának ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(20000, 2, "HU", false), 1500);
+      });
+
+      QUnit.test('T4: Belföldi ingyenes szállítás elérésének ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(20001, 10, "HU", false), 0);
+      });
+
+      QUnit.test('T5: Belföldi 5 kg alatti normál szállítás ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(10000, 4.9, "HU", false), 1500);
+      });
+
+      QUnit.test('T6: Belföldi 5 kg-os határérték ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(10000, 5, "HU", false), 2500);
+      });
+
+      QUnit.test('T7: Belföldi 20 kg-os határérték ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(10000, 20, "HU", false), 2500);
+      });
+
+      QUnit.test('T8: Belföldi 20 kg feletti szállítás ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(10000, 20.1, "HU", false), 5000);
+      });
+
+      QUnit.test('T9: Kisbetűs magyar országkód ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(25000, 3, "hu", false), 0);
+      });
+
+      QUnit.test('T10: Külföldi szállítás ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(10000, 10, "DE", false), 5000);
+      });
+
+      QUnit.test('T11: Külföldi szállítás 20000 Ft feletti rendelésnél ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(30000, 2, "AT", false), 3000);
+      });
+
+      QUnit.test('T12: Expressz szállítás belföldre ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(10000, 2, "HU", true), 2250);
+      });
+
+      QUnit.test('T13: Expressz és külföldi szállítás kombinációjának ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(10000, 2, "SK", true), 4500);
+      });
+
+      QUnit.test('T14: Ingyenes belföldi szállítás expressz opcióval ellenőrzése', function(assert) {
+        assert.strictEqual(calculateShippingCost(25000, 2, "HU", true), 0);
+      });
+
+    });
+  </script>
+</body>
+</html>
