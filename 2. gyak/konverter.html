@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Arab - Római szám konverter (QUnit TDD)</title>
+
+    <link rel="stylesheet"
+        href="https://unpkg.com/qunit@3.0.0-alpha.4/qunit/qunit.css">
+</head>
+
+<body>
+
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+
+<script src="https://unpkg.com/qunit@3.0.0-alpha.4/qunit/qunit.js"></script>
+
+<script>
+    // Értéktáblázat csökkenő sorrendben a kivonásos esetekkel együtt
+    const ROMAN_MAPPING = [
+        { value: 1000, symbol: "M" },
+        { value: 900,  symbol: "CM" },
+        { value: 500,  symbol: "D" },
+        { value: 400,  symbol: "CD" },
+        { value: 100,  symbol: "C" },
+        { value: 90,   symbol: "XC" },
+        { value: 50,   symbol: "L" },
+        { value: 40,   symbol: "XL" },
+        { value: 10,   symbol: "X" },
+        { value: 9,    symbol: "IX" },
+        { value: 5,    symbol: "V" },
+        { value: 4,    symbol: "IV" },
+        { value: 1,    symbol: "I" }
+    ];
+
+    // Konvertáló függvény
+    function toRoman(num) {
+        if (typeof num !== "number" || !Number.isInteger(num)) {
+            throw new Error("Nem egész szám!");
+        }
+        if (num < 1 || num > 3999) {
+            throw new Error("A számnak 1 és 3999 között kell lennie!");
+        }
+
+        let result = "";
+        for (const item of ROMAN_MAPPING) {
+            while (num >= item.value) {
+                result += item.symbol;
+                num -= item.value;
+            }
+        }
+        return result;
+    }
+
+    // QUnit tesztek
+    QUnit.module("Római szám konverter tesztelése");
+
+    QUnit.test("Alapszimbólumok konvertálása", function(assert) {
+        assert.equal(toRoman(1), "I", "1 -> I");
+        assert.equal(toRoman(5), "V", "5 -> V");
+        assert.equal(toRoman(10), "X", "10 -> X");
+        assert.equal(toRoman(50), "L", "50 -> L");
+        assert.equal(toRoman(100), "C", "100 -> C");
+        assert.equal(toRoman(500), "D", "500 -> D");
+        assert.equal(toRoman(1000), "M", "1000 -> M");
+    });
+
+    QUnit.test("Összeadó szabályok", function(assert) {
+        assert.equal(toRoman(2), "II", "2 -> II");
+        assert.equal(toRoman(3), "III", "3 -> III");
+        assert.equal(toRoman(6), "VI", "6 -> VI");
+        assert.equal(toRoman(8), "VIII", "8 -> VIII");
+        assert.equal(toRoman(15), "XV", "15 -> XV");
+        assert.equal(toRoman(20), "XX", "20 -> XX");
+    });
+
+    QUnit.test("Kivonásos szabályok", function(assert) {
+        assert.equal(toRoman(4), "IV", "4 -> IV");
+        assert.equal(toRoman(9), "IX", "9 -> IX");
+        assert.equal(toRoman(40), "XL", "40 -> XL");
+        assert.equal(toRoman(90), "XC", "90 -> XC");
+        assert.equal(toRoman(400), "CD", "400 -> CD");
+        assert.equal(toRoman(900), "CM", "900 -> CM");
+    });
+
+    QUnit.test("Összetett számok", function(assert) {
+        assert.equal(toRoman(14), "XIV", "14 -> XIV");
+        assert.equal(toRoman(44), "XLIV", "44 -> XLIV");
+        assert.equal(toRoman(99), "XCIX", "99 -> XCIX");
+        assert.equal(toRoman(444), "CDXLIV", "444 -> CDXLIV");
+        assert.equal(toRoman(1994), "MCMXCIV", "1994 -> MCMXCIV");
+        assert.equal(toRoman(2026), "MMXXVI", "2026 -> MMXXVI");
+        assert.equal(toRoman(3999), "MMMCMXCIX", "3999 -> MMMCMXCIX");
+    });
+
+    QUnit.test("Érvénytelen tartomány (0, negatív szám vagy túl nagy érték)", function(assert) {
+        assert.throws(function() { toRoman(0); }, /1 és 3999 között/, "0 nem megengedett");
+        assert.throws(function() { toRoman(-5); }, /1 és 3999 között/, "negatív szám nem megengedett");
+        assert.throws(function() { toRoman(4000); }, /1 és 3999 között/, "4000 vagy nagyobb nem megengedett");
+    });
+
+    QUnit.test("Nem megfelelő típus (nem egész szám)", function(assert) {
+        assert.throws(function() { toRoman(3.14); }, /Nem egész szám/, "lebegőpontos szám nem megengedett");
+        assert.throws(function() { toRoman("10"); }, /Nem egész szám/, "string típus nem megengedett");
+    });
+</script>
+
+</body>
+</html>
