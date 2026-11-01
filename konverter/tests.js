@@ -37,3 +37,14 @@ QUnit.test("Összetett számok", function(assert) {
     assert.equal(toRoman(2026), "MMXXVI", "2026 -> MMXXVI");
     assert.equal(toRoman(3999), "MMMCMXCIX", "3999 -> MMMCMXCIX");
 });
+
+QUnit.test("Érvénytelen tartomány (0, negatív szám vagy túl nagy érték)", function(assert) {
+    assert.throws(function() { toRoman(0); }, /1 és 3999 között/, "0 nem megengedett");
+    assert.throws(function() { toRoman(-5); }, /1 és 3999 között/, "negatív szám nem megengedett");
+    assert.throws(function() { toRoman(4000); }, /1 és 3999 között/, "4000 vagy nagyobb nem megengedett");
+});
+
+QUnit.test("Nem megfelelő típus (nem egész szám)", function(assert) {
+    assert.throws(function() { toRoman(3.14); }, /Nem egész szám/, "lebegőpontos szám nem megengedett");
+    assert.throws(function() { toRoman("10"); }, /Nem egész szám/, "string típus nem megengedett");
+});
