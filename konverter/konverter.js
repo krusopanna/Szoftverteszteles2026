@@ -15,6 +15,13 @@ const ROMAN_MAPPING = [
 ];
 
 function toRoman(num) {
+    if (typeof num !== "number" || !Number.isInteger(num)) {
+        throw new Error("Nem egész szám!");
+    }
+    if (num < 1 || num > 3999) {
+        throw new Error("A számnak 1 és 3999 között kell lennie!");
+    }
+
     let result = "";
     for (const item of ROMAN_MAPPING) {
         while (num >= item.value) {
